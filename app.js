@@ -72,6 +72,10 @@ app.get('/reset', function(req, res) {
   res.send(board.create());
 });
 
+app.get('/', function(req, res) {
+  res.send(board.create());
+});
+
 // Only listen on $ node app.js
 
 if (!module.parent) {

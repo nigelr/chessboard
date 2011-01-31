@@ -7,14 +7,7 @@
 var app = require('../app')
         , assert = require('assert');
 
-
-module.exports = {
-  'GET /reset - should create board and contents': function() {
-    assert.response(app,
-    { url: '/reset' },
-    { status: 200, headers: { 'Content-Type': 'application/json' }}
-            , function(res) {
-              assert.eql(JSON.parse(res.body), {
+var default_board = {
                 a1: 'WR', b1: 'WN', c1: 'WB', d1: 'WQ', e1: 'WK', f1: 'WB', g1: 'WN', h1: 'WR'
                 , a2: 'WP', b2: 'WP', c2: 'WP', d2: 'WP', e2: 'WP', f2: 'WP', g2: 'WP', h2: 'WP'
                 , a3: '', b3: '', c3: '', d3: '', e3: '', f3: '', g3: '', h3: ''
@@ -24,7 +17,22 @@ module.exports = {
                 , a7: 'BP', b7: 'BP', c7: 'BP', d7: 'BP', e7: 'BP', f7: 'BP', g7: 'BP', h7: 'BP'
                 , a8: 'BR', b8: 'BN', c8: 'BB', d8: 'BQ', e8: 'BK', f8: 'BB', g8: 'BN', h8: 'BR'
               }
-                      )
+
+module.exports = {
+  'GET /reset - should create board and contents': function() {
+    assert.response(app,
+    { url: '/reset' },
+    { status: 200, headers: { 'Content-Type': 'application/json' }}
+            , function(res) {
+              assert.eql(JSON.parse(res.body), default_board )
+            });
+  }
+  , 'GET / - return entire board': function() {
+    assert.response(app,
+    { url: '/' },
+    { status: 200, headers: { 'Content-Type': 'application/json' }}
+            , function(res) {
+              assert.eql(JSON.parse(res.body), default_board )
             });
   }
 };

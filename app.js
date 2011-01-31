@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 
-var express = require('express');
+var express = require('express')
+  , memoryStore = express.session.MemoryStore;
 
 var app = module.exports = express.createServer();
 
@@ -15,17 +16,18 @@ app.configure(function(){
   app.use(express.bodyDecoder());
   app.use(express.methodOverride());
   app.use(express.cookieDecoder());
-  app.use(express.session());
   app.use(app.router);
   app.use(express.staticProvider(__dirname + '/public'));
+  app.use(express.session({ secret: 'ephoxIsCool', store: memoryStore }));
+
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler()); 
+  app.use(express.errorHandler());
 });
 
 // Routes

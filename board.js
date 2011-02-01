@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 module.exports = {
   pieces: {}
 
@@ -9,6 +11,7 @@ module.exports = {
     }
     this.buildPawnRow("7", "B");
     this.buildBackRow("8", "B");
+    this.save();
     return this.pieces;
   }
 
@@ -31,4 +34,20 @@ module.exports = {
   }
   , col_labels: ["a", "b", "c", "d", "e", "f", "g", "h"]
   , row_pieces: ["R", "N", "B", "Q", "K", "B", "N", "R"]
+  , save: function () {
+    fs.writeFileSync("board.hash", JSON.stringify(this.pieces));
+  }
+  , load: function (callback) {
+    fs.readFile('board.hash', function(err,data) {
+      if (err) {
+        console.log("Missing");
+        createBoardFile(); }
+      else {
+        this.pieces = JSON.parse(data);
+        callback();
+
+      }
+    });
+
+  }
 };

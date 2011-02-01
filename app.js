@@ -15,7 +15,6 @@ var app = module.exports = express.createServer();
 app.configure(function() {
   app.use(express.bodyDecoder());
   app.use(express.methodOverride());
-  app.use(express.cookieDecoder());
   app.use(app.router);
   app.use(express.staticProvider(__dirname + '/public'));
 });
@@ -32,11 +31,17 @@ app.configure('production', function(){
 // Routes
 
 app.get('/reset', function(req, res) {
-  res.send(board.create());
+  console.log("Reset");
+  board.create();
+  res.send(board.pieces);
 });
 
 app.get('/', function(req, res) {
-  res.send(board.create());
+  console.log("Root");
+  board.load(function() {
+    res.send(this.pieces);
+  });
+
 });
 
 // Only listen on $ node app.js

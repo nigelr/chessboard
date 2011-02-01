@@ -8,6 +8,26 @@ see requirements.txt for more detail
 reference: http://en.wikipedia.org/wiki/Algebraic_chess_notation
 
 
+## INSTALLATION ##
+
+Install NodeJS - refer http://nodejs.org/
+
+### Install express ###
+npm install express
+
+
+Testing Framework
+
+npm install expresso
+
+## Running ##
+
+Development
+
+$ nodejs d.js app.js
+
+This will autostart express each time a file is changed
+
 
 ## API ##
 ### New Game ###

@@ -38,15 +38,15 @@ module.exports = {
     fs.writeFileSync("board.hash", JSON.stringify(this.pieces));
   }
   , load: function (callback) {
-    fs.readFile('board.hash', function(err,data) {
+    fs.readFile('board.hash', function(err, data) {
       if (err) {
         console.log("Missing");
-        createBoardFile(); }
+        this.pieces = {};
+      }
       else {
         this.pieces = JSON.parse(data);
-        callback();
-
       }
+      callback();
     });
 
   }

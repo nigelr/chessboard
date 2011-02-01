@@ -6,7 +6,8 @@
 
 var app = require('../app')
     , assert = require('assert')
-    , http = require('http');
+    , http = require('http')
+    , fs = require('fs');
 
 var default_board = {
   a1: 'WR', b1: 'WN', c1: 'WB', d1: 'WQ', e1: 'WK', f1: 'WB', g1: 'WN', h1: 'WR'
@@ -20,25 +21,28 @@ var default_board = {
 }
 
 module.exports = {
-  'GET /reset - should create board and contents': function() {
+  'GET /reset - should create board and contents': function(done) {
     assert.response(app
         , { url: '/reset' }
         , { status: 200, headers: { 'Content-Type': 'application/json' }}
         , function(res) {
           assert.eql(JSON.parse(res.body), default_board)
-
+//          done();
         });
 
   }
-  , 'GET / - should not fail if board not created': function() {
-    assert.response(app,
-    { url: '/' },
-    { status: 200, headers: { 'Content-Type': 'application/json' }}
-        , function(res) {
-          assert.eql(JSON.parse(res.body), default_board)
-        });
+  , 'GET / - should not fail if board not created': function(done) {
+    fs.unlink(__dirname + "/../board.hash", function (status) {
+      assert.response(app,
+      { url: '/' },
+      { status: 200, headers: { 'Content-Type': 'application/json' }}
+          , function(res) {
+            assert.eql(JSON.parse(res.body), {})
+
+          });
+    })
   }
-  , 'GET / - return entire board': function() {
+  ,'GET / - return entire board': function() {
 
     var mySite = http.createClient(3000, 'localhost');
     var request = mySite.request('GET', '/reset');

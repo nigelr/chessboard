@@ -44,6 +44,16 @@ app.get('/', function(req, res) {
 
 });
 
+app.get('/show/:pos', function(req, res) {
+  console.log("Show");
+  board.load(function() {
+    pos = req.params.pos
+    ret = {}
+    ret[pos] = this.pieces[pos]
+    res.send(ret)
+  });
+});
+
 // Only listen on $ node app.js
 
 if (!module.parent) {

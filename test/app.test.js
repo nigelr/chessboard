@@ -59,4 +59,23 @@ module.exports = {
 
     });
   }
+  , 'GET /show/a1 - return a single pieces position': function () {
+    assert.response(app,
+    { url: '/show/a1' },
+    { status: 200, headers: { 'Content-Type': 'application/json' }}
+        , function(res) {
+          assert.eql(JSON.parse(res.body), {a1: "WR"})
+        });
+
+  }
+
+  , 'GET /show/d4 - return a blank position': function () {
+    assert.response(app,
+    { url: '/show/d4' },
+    { status: 200, headers: { 'Content-Type': 'application/json' }}
+        , function(res) {
+          assert.eql(JSON.parse(res.body), {d4: ""})
+        });
+
+  }
 };

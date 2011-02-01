@@ -31,17 +31,17 @@ module.exports = {
         });
 
   }
-  , 'GET / - should not fail if board not created': function(done) {
-    fs.unlink(__dirname + "/../board.hash", function (status) {
-      assert.response(app,
-      { url: '/' },
-      { status: 200, headers: { 'Content-Type': 'application/json' }}
-          , function(res) {
-            assert.eql(JSON.parse(res.body), {})
-
-          });
-    })
-  }
+//  , 'GET / - should not fail if board not created': function(done) {
+//    fs.unlink(__dirname + "/../board.hash", function (status) {
+//      assert.response(app,
+//      { url: '/' },
+//      { status: 200, headers: { 'Content-Type': 'application/json' }}
+//          , function(res) {
+//            assert.eql(JSON.parse(res.body), {})
+//
+//          });
+//    })
+//  }
   ,'GET / - return entire board': function() {
 
     var mySite = http.createClient(3000, 'localhost');
@@ -78,4 +78,47 @@ module.exports = {
         });
 
   }
-};
+
+  , 'GET /move/b2/b3 - move a piece to an empty location': function () {
+    assert.response(app,
+    { url: '/move/b2/b3' },
+    { status: 200, headers: { 'Content-Type': 'application/json' }}
+        , function(res) {
+          assert.eql(JSON.parse(res.body), {removed: ""})
+        });
+  }
+
+  , 'GET /move/a1/a7 - move a piece to location where piece exists': function () {
+    assert.response(app,
+    { url: '/move/a1/a8' },
+    { status: 200, headers: { 'Content-Type': 'application/json' }}
+        , function(res) {
+          assert.eql(JSON.parse(res.body), {removed: "BR"})
+        });
+  }
+//  , 'GET / - after moving check piece moved': function () {
+//    var mySite = http.createClient(3000, 'localhost');
+//    var request = mySite.request('GET', '/reset');
+//    request.end();
+//    request.on('response', function (response) {
+//      var mySite1 = http.createClient(3000, 'localhost');
+//      var request1 = mySite1.request('GET', '/move/d1/e8');
+//      request1.end();
+//      request1.on('response', function (response1) {
+//        assert.response(app,
+//        { url: '/' },
+//        { status: 200, headers: { 'Content-Type': 'application/json' }}
+//            , function(res) {
+//              board = JSON.parse(res.body)
+////              console.log(board);
+//              assert.equal("", board["d1"])
+//              assert.equal("WQ", board["e8"])
+//            });
+//
+//
+//      })
+//      })
+//
+//    }
+
+  };

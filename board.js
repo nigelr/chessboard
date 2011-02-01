@@ -37,17 +37,12 @@ module.exports = {
   , save: function () {
     fs.writeFileSync("board.hash", JSON.stringify(this.pieces));
   }
-  , load: function (callback) {
-    fs.readFile('board.hash', function(err, data) {
-      if (err) {
-        console.log("Missing");
-        this.pieces = {};
-      }
-      else {
-        this.pieces = JSON.parse(data);
-      }
-      callback();
-    });
 
+  , move: function (from, to) {
+    piece = this.pieces[from]
+    this.pieces[from] = "";
+    removed = this.pieces[to]
+    this.pieces[to] = piece;
+    return removed;
   }
 };

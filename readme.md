@@ -1,6 +1,6 @@
-# Chessboard Exercise #
+#  Exercise #
 
-
+# The Chessboard exercise is very useful for front end developing.
 Create a simple API to support a chessboard
 
 see requirements.txt for more detail
